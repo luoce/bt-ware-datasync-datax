@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}任务增量参数记录{% endblock %}
+
+{% block main_content %}
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>
+                        Job 增量参数记录
+                    </h1>
+                </div><!-- /.page-header -->
+                <div class="clearfix">
+                    <div class="pull-right tableTools-container">
+
+                    </div>
+                </div>
+                <div class="table-header">
+
+                </div>
+                <div>
+                    <div class="table-responsive">
+                        <table id="job_increment_param_record" class="table table-striped table-bordered table-hover">
+                        </table>
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+{% endblock %}
+
+{% block script_extend %}
+<script type="text/javascript">
+        $('[data-rel=tooltip]').tooltip();
+        var mData = [
+            {
+                "mData": "jobName",
+                "bSortable": false,
+                "sTitle": "任务名称"
+            }, {
+                "mData": "fromInstance",
+                "bSortable": false,
+                "sTitle": "From ID"
+            }, {
+                "mData": "incrementParam",
+                "bSortable": false,
+                "sTitle": "参数"
+            }, {
+                "mData": "incrementVal",
+                "bSortable": false,
+                "sTitle": "值"
+            }];
+
+
+        /* 绘制table */
+        var initTable = function (url) {
+            return initDataTable("job_increment_param_record", {
+                "aoColumns": mData,
+                "bDestroy": true,
+                "fnDrawCallback": function () {
+
+                }
+            }, url, true);
+        };
+
+        var dataTable = initTable("/job_increment_param_record/list");
+
+        /* 刷新table */
+        function reloadTable() {
+            dataTable.fnReloadAjax();
+        }
+
+</script>
+{% endblock %}

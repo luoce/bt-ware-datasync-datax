@@ -1,0 +1,68 @@
+<div id="edit_modal" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Job</h4>
+            </div>
+            <div class="modal-body">
+                <form id="edit_form" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="name"> 名称(标识) </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="name" name="name" placeholder="Job name" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="displayName"> 描述 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="displayName" name="displayName" placeholder="描述" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="defJson"> Jobjson </label>
+                        <div class="col-sm-9">
+                            <textarea cols="" rows="5" class="form-control" id="defJson" name="defJson"
+                                      placeholder="Datax job json"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="isIncrement"> 是否增量 </label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="isIncrement" name="isIncrement">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="incrementParam"> 增量参数 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="incrementParam" name="incrementParam" placeholder="格式：${参数名称}"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="incrementParamStart"> 增量参数起始值 </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="incrementParamStart" name="incrementParamStart" placeholder="1970-01-01 00:00:00"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="jobCron"> jobCron </label>
+                        <div class="col-sm-9">
+                            <input type="text" id="jobCron" name="jobCron" placeholder="格式：0 0/5 14,18 * * ?"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
