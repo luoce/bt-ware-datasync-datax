@@ -51,7 +51,6 @@ def to_job_instance(jobName=None):
     app.logger.info(u'%s 任务写入json文件完成，目录为：%s', jobName, jsonFilePath)
 
     localTime = time.localtime()
-    fmtTime = time.strftime('%Y-%m-%d %H:%M:%S', localTime)  # 时间往前提，尽量覆盖同步任务执行时产生的新数据
 
     # 组织Datax的执行命令
     datax_execute_cmd = app.config['DATAX_PY_PATH'] + ' ' + jsonFilePath
@@ -69,18 +68,20 @@ def to_job_instance(jobName=None):
 
     end_time = time.time() * 1000
 
-    newJobInstance = JobInstance(instanceId=newInstanceUUID, jobName=jobName,
-                                 jobDisplayName=extendJobDefine.displayName,
-                                 jobJson=jobJson, jobJsonPath=jsonFilePath, result=status, executeOutput=output,
-                                 executeTime=execute_time, endTime=end_time)
-
-    newJobIncrementParamRecord = JobIncrementParamRecord(jobName=extendJobDefine.name, fromInstance=newInstanceUUID,
-                                                         incrementParam=extendJobDefine.incrementParam,
-                                                         incrementVal=fmtTime)
-
     try:
+        newJobInstance = JobInstance(instanceId=newInstanceUUID, jobName=jobName,
+                                     jobDisplayName=extendJobDefine.displayName,
+                                     jobJson=jobJson, jobJsonPath=jsonFilePath, result=status, executeOutput=output,
+                                     executeTime=execute_time, endTime=end_time)
         newJobInstance.save()
-        newJobIncrementParamRecord.save()
+
+        # 如果是增量任务，需要保存增量参数到数据库，作为下一次的起始值
+        if extendJobDefine.isIncrement:
+            fmtTime = time.strftime('%Y-%m-%d %H:%M:%S', localTime)  # 时间往前提，尽量覆盖同步任务执行时产生的新数据
+            newJobIncrementParamRecord = JobIncrementParamRecord(jobName=extendJobDefine.name, fromInstance=newInstanceUUID,
+                                                                 incrementParam=extendJobDefine.incrementParam,
+                                                                 incrementVal=fmtTime)
+            newJobIncrementParamRecord.save()
     except KeyError, e:
         app.logger.error(u'%s 任务执行完成，但记录保存时出现错误: %s', jobName, e.message)
 
